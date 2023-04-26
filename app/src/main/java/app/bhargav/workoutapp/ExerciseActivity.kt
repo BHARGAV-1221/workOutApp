@@ -52,11 +52,14 @@ class ExerciseActivity : AppCompatActivity() {
         binding?.tvExerciseName?.visibility = View.INVISIBLE
         binding?.flExerciseView?.visibility=View.INVISIBLE      //// we are Invisibling  the second frame layout
         binding?.ivImage?.visibility= View.INVISIBLE
+        binding?.tvUpComingLabel?.visibility= View.VISIBLE
+        binding?.tvUpCOmingExercise?.visibility= View.VISIBLE
+
         if(restTimer!= null){
             restTimer?.cancel()       // when this is not an this activity we are starting the value from 0
             restProgress= 0
         }
-
+        binding?.tvUpCOmingExercise?.text = exerciseList!![currentExercisePostion +1].getName()        // Here we are setting next exercise name
         setRestProgressBar()
     }
 
@@ -66,6 +69,8 @@ class ExerciseActivity : AppCompatActivity() {
        binding?.tvExerciseName?.visibility = View.VISIBLE
         binding?.flExerciseView?.visibility=View.VISIBLE      //// we are visibling  the second frame layout
       binding?.ivImage?.visibility= View.VISIBLE
+        binding?.tvUpComingLabel?.visibility= View.INVISIBLE
+        binding?.tvUpCOmingExercise?.visibility= View.INVISIBLE
 
         if(restTimerExcercise!= null){
             restTimerExcercise?.cancel()     // when this is not an this activity we are starting the value from 0
