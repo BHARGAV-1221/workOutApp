@@ -3,11 +3,15 @@ package app.bhargav.workoutapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import app.bhargav.workoutapp.databinding.ActivityExerciseBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ExerciseActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var binding : ActivityExerciseBinding ?= null // binding to excercisebinding cml
 
@@ -20,6 +24,10 @@ class ExerciseActivity : AppCompatActivity() {
     private var exerciseList : ArrayList<ExerciseModel>? = null     // getting Exercise Model to a array list variable
 
     private var currentExercisePostion = -1
+
+    private var tts :TextToSpeech ? = null
+
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +42,7 @@ class ExerciseActivity : AppCompatActivity() {
 
 
         exerciseList = Constants.defaultExerciseModel()     // Creating exerciselist using Constant object
+        tts = TextToSpeech(this, this)
         binding?.toolBarExcercise?.setNavigationOnClickListener {
             onBackPressed()                                              // it will go back to the previous screen
         }
@@ -59,6 +68,8 @@ class ExerciseActivity : AppCompatActivity() {
             restTimer?.cancel()       // when this is not an this activity we are starting the value from 0
             restProgress= 0
         }
+
+        speakOut("Please Rest for 10 seconds")
         binding?.tvUpCOmingExercise?.text = exerciseList!![currentExercisePostion +1].getName()        // Here we are setting next exercise name
         setRestProgressBar()
     }
@@ -77,7 +88,7 @@ class ExerciseActivity : AppCompatActivity() {
             restProgressExcercise= 0
         }
 
-
+       speakOut("Your Exercise is "+exerciseList!![currentExercisePostion].getName())    // setting exercise name to speakout methif
         binding?.ivImage?.setImageResource(exerciseList!![currentExercisePostion].getImage())   // Setting the image part
         binding?.tvExerciseName?.text = exerciseList!![currentExercisePostion].getName()        // Setting the text part
 
@@ -134,7 +145,9 @@ class ExerciseActivity : AppCompatActivity() {
                     "Congrats your Exercise done",
                     Toast.LENGTH_LONG
                 ).show()
+                    speakOut("Congrats your Done with your Exercise")
                 }
+
             }
 
         }.start()
@@ -151,9 +164,35 @@ class ExerciseActivity : AppCompatActivity() {
             restTimerExcercise?.cancel()   // cancelling restTimerExcercise time when its not null if this activity destroyed
             restProgressExcercise= 0       // setting value to 0 if activity destroyed
         }
+
+        if(tts != null){
+            tts!!.stop()
+            tts!!.shutdown()
+        }
         binding = null
 
 
         // We need to binidng as null in onDestroy must and should
+    }
+
+
+    // InBuilt method for speck API that will will give language and success anf failure cae
+    override fun onInit(status: Int) {
+        if(status == TextToSpeech.SUCCESS){
+            val result = tts?.setLanguage(Locale.ENGLISH)    // Setting english Language
+
+            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                Log.e("TTS","The Language specified is not supported!")
+            }else{
+                Log.e("TTS","Intialization Failed")
+            }
+        }
+    }
+
+    
+    
+    // Method to speak the text
+    private fun speakOut(text:String){
+        tts?.speak(text,TextToSpeech.QUEUE_FLUSH,null,"")
     }
 }
