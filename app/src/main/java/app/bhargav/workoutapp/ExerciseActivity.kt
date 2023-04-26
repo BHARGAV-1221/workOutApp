@@ -21,10 +21,6 @@ class ExerciseActivity : AppCompatActivity() {
 
     private var currentExercisePostion = -1
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityExerciseBinding.inflate(layoutInflater)
@@ -50,6 +46,12 @@ class ExerciseActivity : AppCompatActivity() {
 
 
     private  fun setUpRestView(){
+
+        binding?.flRestView?.visibility = View.VISIBLE    // we are Visibling the first Frame layout
+        binding?.textviewtitle?.visibility = View.VISIBLE       // setting the text for second frame layout
+        binding?.tvExerciseName?.visibility = View.INVISIBLE
+        binding?.flExerciseView?.visibility=View.INVISIBLE      //// we are Invisibling  the second frame layout
+        binding?.ivImage?.visibility= View.INVISIBLE
         if(restTimer!= null){
             restTimer?.cancel()       // when this is not an this activity we are starting the value from 0
             restProgress= 0
@@ -59,16 +61,21 @@ class ExerciseActivity : AppCompatActivity() {
     }
 
     private  fun setUpExcerciseView(){
-       binding?.flprogressBar?.visibility = View.INVISIBLE    // we are invisibleing the first Frame layout
-        binding?.textviewtitle?.text= "Exercise name"       // setting the text for second frame layout
-
+       binding?.flRestView?.visibility = View.INVISIBLE    // we are invisibleing the first Frame layout
+        binding?.textviewtitle?.visibility = View.INVISIBLE       // setting the text for second frame layout
+       binding?.tvExerciseName?.visibility = View.VISIBLE
         binding?.flExerciseView?.visibility=View.VISIBLE      //// we are visibling  the second frame layout
-
+      binding?.ivImage?.visibility= View.VISIBLE
 
         if(restTimerExcercise!= null){
             restTimerExcercise?.cancel()     // when this is not an this activity we are starting the value from 0
             restProgressExcercise= 0
         }
+
+
+        binding?.ivImage?.setImageResource(exerciseList!![currentExercisePostion].getImage())   // Setting the image part
+        binding?.tvExerciseName?.text = exerciseList!![currentExercisePostion].getName()        // Setting the text part
+
         setExcerciseRestProgressBar()
 
 
@@ -87,8 +94,8 @@ class ExerciseActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 // after this countdown finish we are calling setupexcerciseview method
-                setUpExcerciseView()
                 currentExercisePostion++
+                setUpExcerciseView()
             }
 
         }.start()
@@ -108,11 +115,21 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                Toast.makeText(
+//                Toast.makeText(
+//                    this@ExerciseActivity,
+//                    "30 Secs Over, will go to rest View",
+//                    Toast.LENGTH_LONG
+//                ).show()
+
+                if(currentExercisePostion< exerciseList?.size!! -1){
+                    setUpRestView()                // valindating how many more exercises left based on that calling setRestView method if all over then showing toast
+                }else{
+                    Toast.makeText(
                     this@ExerciseActivity,
-                    "30 Secs Over, will go to rest View",
+                    "Congrats your Exercise done",
                     Toast.LENGTH_LONG
                 ).show()
+                }
             }
 
         }.start()

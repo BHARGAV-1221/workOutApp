@@ -27,11 +27,11 @@ android:id="@+id/textviewtitle"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/flprogressBar"
+        app:layout_constraintBottom_toTopOf="@id/flRestView"
         />
 
     <FrameLayout
-        android:id="@+id/flprogressBar"
+        android:id="@+id/flRestView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
@@ -75,7 +75,29 @@ android:id="@+id/textviewtitle"
     </FrameLayout>
 
 
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/running"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/tvExerciseName"
+        app:layout_constraintTop_toBottomOf="@+id/toolBarExcercise"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvExerciseName"
+        android:text="ExerciseName"
+        android:textColor="@color/colorAcent"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/flExerciseView"
+        tools:visibility="visible"/>
     <FrameLayout
         android:id="@+id/flExerciseView"
         android:layout_width="100dp"
@@ -87,7 +109,7 @@ android:id="@+id/textviewtitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolBarExcercise"
+        app:layout_constraintTop_toBottomOf="@id/ivImage"
         >
 
         <ProgressBar
