@@ -1,5 +1,6 @@
 package app.bhargav.workoutapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -30,7 +31,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var exerciseAdapter : ExercisStatusAdapter ? = null
 
+   private var restTimmerDuration : Long = 10
 
+    private var exerciseTimmerDuration  : Long= 10
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityExerciseBinding.inflate(layoutInflater)
@@ -41,13 +44,14 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if(supportActionBar!=null){
             supportActionBar?.setDisplayHomeAsUpEnabled(true)    // to set back option in navigation bar
         }
+        binding?.toolBarExcercise?.setNavigationOnClickListener {
+            onBackPressed()                                              // it will go back to the previous screen
+        }
 
 
         exerciseList = Constants.defaultExerciseModel()     // Creating exerciselist using Constant object
         tts = TextToSpeech(this, this)
-        binding?.toolBarExcercise?.setNavigationOnClickListener {
-            onBackPressed()                                              // it will go back to the previous screen
-        }
+
 
 //setRestProgressBar()
         setUpRestView()
@@ -109,7 +113,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setRestProgressBar(){
         binding?.progressbar?.progress= restProgress
 
-        restTimer = object :CountDownTimer(10000,1000){
+        restTimer = object :CountDownTimer(restTimmerDuration*1000,1000){
             override fun onTick(p0: Long) {
                 restProgress++   // for countdowninterval what needs to happen we need to implement that
             binding?.progressbar?.progress = 10 - restProgress
@@ -132,7 +136,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setExcerciseRestProgressBar(){
         binding?.progressbarExcercise?.progress= restProgressExcercise
 
-        restTimerExcercise = object :CountDownTimer(30000,1000){
+        restTimerExcercise = object :CountDownTimer(exerciseTimmerDuration*3000 ,1000){
 
             // for countdowninterval what needs to happen we need to implement in below method
             override fun onTick(p0: Long) {
@@ -143,23 +147,16 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             override fun onFinish() {
-//                Toast.makeText(
-//                    this@ExerciseActivity,
-//                    "30 Secs Over, will go to rest View",
-//                    Toast.LENGTH_LONG
-//                ).show()
-                exerciseList!![currentExercisePostion].setIsSelected(false)       // setting is selected method to false since the current exercise is completed
-                exerciseList!![currentExercisePostion].setIsCompleted(true)          // Setting isCompeted methos to true since the current exercide is complted
-                exerciseAdapter?.notifyDataSetChanged()
+
                 if(currentExercisePostion< exerciseList?.size!! -1){
+                    exerciseList!![currentExercisePostion].setIsSelected(false)       // setting is selected method to false since the current exercise is completed
+                    exerciseList!![currentExercisePostion].setIsCompleted(true)          // Setting isCompeted methos to true since the current exercide is complted
+                    exerciseAdapter?.notifyDataSetChanged()
                     setUpRestView()                // valindating how many more exercises left based on that calling setRestView method if all over then showing toast
                 }else{
-                    Toast.makeText(
-                    this@ExerciseActivity,
-                    "Congrats your Exercise done",
-                    Toast.LENGTH_LONG
-                ).show()
-                    speakOut("Congrats your Done with your Exercise")
+                    finish()
+                    val intent = Intent(this@ExerciseActivity,FinishActivity::class.java)    // Setting finish screen intent
+                    startActivity(intent)
                 }
 
             }
