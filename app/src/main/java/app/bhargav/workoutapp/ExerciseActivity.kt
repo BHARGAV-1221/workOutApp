@@ -7,6 +7,7 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.bhargav.workoutapp.databinding.ActivityExerciseBinding
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,7 +28,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var tts :TextToSpeech ? = null
 
-    
+    private var exerciseAdapter : ExercisStatusAdapter ? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +51,17 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
 //setRestProgressBar()
         setUpRestView()
+        setUpExerciseStatusRecyclerView()
 
 
     }
 
+    private fun setUpExerciseStatusRecyclerView() {
+     binding?.rvExerciseStatus?.layoutManager =
+         LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        exerciseAdapter = ExercisStatusAdapter(exerciseList!!)
+        binding?.rvExerciseStatus?.adapter= exerciseAdapter
+    }
 
     private  fun setUpRestView(){
 
@@ -111,6 +120,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             override fun onFinish() {
                 // after this countdown finish we are calling setupexcerciseview method
                 currentExercisePostion++
+
+                exerciseList!![currentExercisePostion].setIsSelected(true)     // Setting the isSelected method to true since it not yet completed
+                exerciseAdapter?.notifyDataSetChanged()       // to notify the excercise adapter
                 setUpExcerciseView()
             }
 
@@ -136,7 +148,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 //                    "30 Secs Over, will go to rest View",
 //                    Toast.LENGTH_LONG
 //                ).show()
-
+                exerciseList!![currentExercisePostion].setIsSelected(false)       // setting is selected method to false since the current exercise is completed
+                exerciseList!![currentExercisePostion].setIsCompleted(true)          // Setting isCompeted methos to true since the current exercide is complted
+                exerciseAdapter?.notifyDataSetChanged()
                 if(currentExercisePostion< exerciseList?.size!! -1){
                     setUpRestView()                // valindating how many more exercises left based on that calling setRestView method if all over then showing toast
                 }else{
