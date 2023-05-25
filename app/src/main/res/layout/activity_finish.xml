@@ -24,7 +24,7 @@
         android:textSize="34dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="150dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/item_circular_color_accent_border"
@@ -56,11 +56,13 @@ android:textColor="#212121"
         android:textColor="#212121"
         android:textSize="18dp"/>
 <Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
     android:id="@+id/btnFinish"
-    android:layout_gravity="bottom"
+    android:layout_gravity="center"
     android:layout_marginTop="35dp"
+    android:gravity="center"
     android:text="FINISH"
+    android:background="@drawable/item_circular_thin_color_accent_border"
 android:textColor="#FFFFFF"/>
 </LinearLayout>

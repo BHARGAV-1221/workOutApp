@@ -4,33 +4,33 @@ object Constants {
 
     fun defaultExerciseModel():ArrayList<ExerciseModel>{
         val exerciseList = ArrayList<ExerciseModel>()
-        val runningExer = ExerciseModel(
+
+        val strechingExer = ExerciseModel(
             1,
-            "Running",
-            R.drawable.running,
+            "Streching",
+            R.drawable.streching,
             false,
             false
         )
-        exerciseList.add(runningExer)
+        exerciseList.add(strechingExer)
 
-        val absExer = ExerciseModel(
+        val lungesExer = ExerciseModel(
             2,
-            "abs",
-            R.drawable.abs,
+            "lunges",
+            R.drawable.lunges,
             false,
             false
         )
-        exerciseList.add(absExer)
+        exerciseList.add(lungesExer)
 
-        val liftingExer = ExerciseModel(
+        val squatExer = ExerciseModel(
             3,
-            "Lifting",
-            R.drawable.lifting,
+            "Squats",
+            R.drawable.squats,
             false,
             false
         )
-        exerciseList.add(liftingExer)
-
+        exerciseList.add(squatExer)
         val pushUpExer = ExerciseModel(
             4,
             "Push-Up",
@@ -39,23 +39,62 @@ object Constants {
             false
         )
         exerciseList.add(pushUpExer)
-        val squatExer = ExerciseModel(
-            5,
-            "Squats",
-            R.drawable.squats,
-            false,
-            false
-        )
-        exerciseList.add(squatExer)
 
-        val strechingExer = ExerciseModel(
-            6,
-            "Streching",
-            R.drawable.streching,
+        val pullUpExcer = ExerciseModel(
+            5,
+            "Pull up",
+            R.drawable.pullup,
             false,
             false
         )
-        exerciseList.add(strechingExer)
+        exerciseList.add(pullUpExcer)
+
+        val absExer = ExerciseModel(
+            6,
+            "abs",
+            R.drawable.abs,
+            false,
+            false
+        )
+        exerciseList.add(absExer)
+
+        val runningExer = ExerciseModel(
+            7,
+            "Running",
+            R.drawable.running,
+            false,
+            false
+        )
+        exerciseList.add(runningExer)
+
+
+        val mountExer = ExerciseModel(
+            8,
+            "Mountian CLimbing",
+            R.drawable.mountainclimbing,
+            false,
+            false
+        )
+        exerciseList.add(mountExer)
+
+        val liftingExer = ExerciseModel(
+            9,
+            "Lifting",
+            R.drawable.lifting,
+            false,
+            false
+        )
+        exerciseList.add(liftingExer)
+
+        val plankExercise = ExerciseModel(
+            10,
+            "Plank",
+            R.drawable.plank,
+            false,
+            false
+        )
+        exerciseList.add(plankExercise)
+
 
         return exerciseList
 
