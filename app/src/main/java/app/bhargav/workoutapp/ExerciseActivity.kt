@@ -1,5 +1,6 @@
 package app.bhargav.workoutapp
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.bhargav.workoutapp.databinding.ActivityExerciseBinding
+import app.bhargav.workoutapp.databinding.DialogCustomBackConfirmationBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -45,7 +47,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)    // to set back option in navigation bar
         }
         binding?.toolBarExcercise?.setNavigationOnClickListener {
-            onBackPressed()                                              // it will go back to the previous screen
+            customDailogBack()                                              // it will go back to the previous screen
         }
 
 
@@ -58,6 +60,26 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setUpExerciseStatusRecyclerView()
 
 
+    }
+
+    private fun customDailogBack() {
+        val customDialog =Dialog(this)
+        val dialogBinding = DialogCustomBackConfirmationBinding.inflate(layoutInflater)
+        customDialog.setContentView(dialogBinding.root)
+     customDialog.setCanceledOnTouchOutside(false)      // if you touch outside the dialog dialog will not disapper
+        dialogBinding.btnYes.setOnClickListener {
+this@ExerciseActivity.finish()
+            customDialog.dismiss()
+        }
+        dialogBinding.btnNo.setOnClickListener {
+           customDialog.dismiss()
+        }
+        customDialog.show()
+    }
+
+    override fun onBackPressed() {
+        customDailogBack()
+       // super.onBackPressed()
     }
 
     private fun setUpExerciseStatusRecyclerView() {

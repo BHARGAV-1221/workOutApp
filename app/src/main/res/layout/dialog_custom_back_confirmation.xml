@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top"
+    android:padding="16dp">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Are you sure?"
+    android:textColor="@color/black"
+    android:textSize="18dp"
+    android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="This will stop your workout , you've came this far , Are you sure you want to quit?"
+        android:textColor="#212121"
+        android:textSize="16dp"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/item_circular_color_accent_border"
+            android:theme="@style/Theme.Material3.DynamicColors.Light"
+            android:text="Yes" />
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:theme="@style/Theme.Material3.DynamicColors.Light"
+            android:background="@drawable/item_circular_color_accent_border"/>
+
+    </LinearLayout>
+</LinearLayout>
